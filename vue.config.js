@@ -1,29 +1,29 @@
 // 两个插件分别负责打包客户端和服务端
-const VueSSRServerPlugin = require("vue-server-renderer/server-plugin");
-const VueSSRClientPlugin = require("vue-server-renderer/client-plugin");
-const nodeExternals = require("webpack-node-externals");
-const merge = require("lodash.merge");
+const VueSSRServerPlugin = require('vue-server-renderer/server-plugin');
+const VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
+const nodeExternals = require('webpack-node-externals');
+const merge = require('lodash.merge');
 // 根据传入环境变量决定入口文件和相应配置项
-const TARGET_NODE = process.env.WEBPACK_TARGET === "node";
-const target = TARGET_NODE ? "server" : "client";
+const TARGET_NODE = process.env.WEBPACK_TARGET === 'node';
+const target = TARGET_NODE ? 'server' : 'client';
 module.exports = {
   css: {
     extract: false
   },
-  outputDir: "./dist/" + target,
+  outputDir: './dist/' + target,
   configureWebpack: () => ({
     // 将 entry 指向应用程序的 server / client 文件
     entry: `./src/entry-${target}.js`,
     // 对 bundle renderer 提供 source map 支持
-    devtool: "source-map",
+    devtool: 'source-map',
     // target设置为node使webpack以Node适用的方式处理动态导入，
     // 并且还会在编译Vue组件时告知`vue-loader`输出面向服务器代码。
-    target: TARGET_NODE ? "node" : "web",
+    target: TARGET_NODE ? 'node' : 'web',
     // 是否模拟node全局变量
     node: TARGET_NODE ? undefined : false,
     output: {
       // 此处使用Node风格导出模块
-      libraryTarget: TARGET_NODE ? "commonjs2" : undefined
+      libraryTarget: TARGET_NODE ? 'commonjs2' : undefined
     },
     // https://webpack.js.org/configuration/externals/#function
     // https://github.com/liady/webpack-node-externals
@@ -47,11 +47,11 @@ module.exports = {
   chainWebpack: config => {
     // cli4项目添加
     if (TARGET_NODE) {
-      config.optimization.delete("splitChunks");
+      config.optimization.delete('splitChunks');
     }
     config.module
-      .rule("vue")
-      .use("vue-loader")
+      .rule('vue')
+      .use('vue-loader')
       .tap(options => {
         merge(options, {
           optimizeSSR: false
