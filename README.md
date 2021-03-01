@@ -17,5 +17,5 @@ npm run server
 
 ## 相关文档
 
-[vue cli](https://cli.vuejs.org/config/).
-[vue ssr](https://ssr.vuejs.org/zh/)
+- [vue cli](https://cli.vuejs.org/config/).
+- [vue ssr](https://ssr.vuejs.org/zh/)
